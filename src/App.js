@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./lollipop1bg.jpg";
+import "./App.css";
+import { Description, ShopImage, Title, GlobalStyle } from "./styles";
+import CandyList from "./components/CandyList";
+import { ThemeProvider } from "styled-components";
+
+const theme = {
+  mainColor: "#242424",
+  backgroundColor: "#fefafb",
+  pink: "#ff85a2",
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <div>
+        <Title>Candylicious</Title>
+        <Description>A place where candy lovers unite</Description>
+        <ShopImage alt="candy aesthetic" src={logo} />
+      </div>
+      <CandyList />
+    </ThemeProvider>
   );
 }
 
