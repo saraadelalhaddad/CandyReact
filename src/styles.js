@@ -2,8 +2,9 @@ import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 body {
-  color: #242424;
-  background-color:#fefafb}
+  color: ${(props) => props.theme.mainColor};
+  background-color:${(props) => props.theme.backgroundColor};
+}
 
 `;
 
@@ -45,6 +46,22 @@ const CandyWrapper = styled.div`
   }
 `;
 
+const ThemeButton = styled.button`
+  font-size: 1em;
+  margin: 1.25em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  background-color: ${(props) => props.theme.mainColor};
+  color: ${(props) => props.theme.backgroundColor};
+`;
+
+const SearchBarStyled = styled.input` 
+padding: 0.5rem;
+margin 1 rem auto;
+display: block;
+width: 40%;
+`;
+
 export {
   Description,
   Title,
@@ -52,4 +69,6 @@ export {
   ListWrapper,
   CandyWrapper,
   GlobalStyle,
+  ThemeButton,
+  SearchBarStyled,
 };
