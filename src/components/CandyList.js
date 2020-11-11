@@ -1,5 +1,5 @@
 import { ListWrapper } from "../styles";
-import candies from "../candies";
+
 import CandyItem from "./CandyItem";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
@@ -7,11 +7,16 @@ import { useState } from "react";
 const CandyList = (props) => {
   const [query, setQuery] = useState("");
 
-  const filteredCandies = candies.filter((candy) =>
+  const filteredCandies = props.candies.filter((candy) =>
     candy.name.toLowerCase().includes(query.toLowerCase())
   );
   const candyList = filteredCandies.map((candy) => (
-    <CandyItem candyObject={candy} key={candy.id} setCandy={props.setCandy} />
+    <CandyItem
+      candy={candy}
+      deleteCandy={props.deleteCandy}
+      key={candy.id}
+      setCandy={props.setCandy}
+    />
   ));
   return (
     <div>

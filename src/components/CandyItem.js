@@ -1,15 +1,19 @@
 import { CandyWrapper } from "../styles";
+import DeleteButton from "./buttons/DeleteButton";
 
 const CandyItem = (props) => {
+  const candy = props.candy;
+
   return (
     <CandyWrapper>
       <img
-        alt={props.candyObject.name}
-        src={props.candyObject.image}
-        onClick={() => props.setCandy(props.candyObject)}
+        alt={candy.name}
+        src={candy.image}
+        onClick={() => props.setCandy(candy)}
       />
-      <p>{props.candyObject.name}</p>
-      <p className="candy-price"> {props.candyObject.price} KD </p>
+      <p>{candy.name}</p>
+      <p className="candy-price"> {candy.price} KD </p>
+      <DeleteButton candyId={candy.id} deleteCandy={props.deleteCandy} />
     </CandyWrapper>
   );
 };
