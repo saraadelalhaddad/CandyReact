@@ -1,59 +1,65 @@
-import logo from "./lollipop1bg.jpg";
-import "./App.css";
-import {
-  Description,
-  ShopImage,
-  Title,
-  GlobalStyle,
-  ThemeButton,
-} from "./styles";
-import { ThemeProvider } from "styled-components";
 import React, { useState } from "react";
-// import candies from "./candies";
+import candies from "./candies";
+import { Route, Switch } from "react-router";
+
+/*** Styles ***/
+import "./App.css";
+import { GlobalStyle, ThemeButton } from "./styles";
+import { ThemeProvider } from "styled-components";
+import Home from "./components/Home";
 
 /*** Components ***/
 import CandyDetail from "./components/CandyDetail";
 import CandyList from "./components/CandyList";
-// import CandyItem from "./components/CandyItem";
+import NavBar from "./components/NavBar";
 
 const theme = {
   light: {
-    mainColor: "black", // main font color
-    backgroundColor: "white", // main background color
+    mainColor: "#242424", // main font color
+    backgroundColor: "#fefafb", // main background color
     pink: "#ff85a2",
+    red: "#ff3232",
   },
   dark: {
-    mainColor: "white", // main font color
-    backgroundColor: "black", // main background color
+    mainColor: "#fefafb", // main font color
+    backgroundColor: "#242424", // main background color
     pink: "#ff85a2",
+    red: "#ff3232",
   },
 };
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState("light");
-  const [candy, setCandy] = useState(null);
+
+  const [_candies, setCandies] = useState(candies);
+
+  const deleteCandy = (candySlug) => {
+    const updatedCandies = _candies.filter((candy) => candy.id !== candySlug);
+    setCandies(updatedCandies);
+  };
+
   const toggleTheme = () =>
     setCurrentTheme(currentTheme === "light" ? "dark" : "light");
 
-  const setView = () => {
-    if (candy) return <CandyDetail candy={candy} />;
-    else return <CandyList setCandy={setCandy} />;
-  };
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle />
-      <ThemeButton onClick={toggleTheme}>
-        {theme === "light" ? "Dark" : "Light"} Mode
-      </ThemeButton>
-      <div>
-        <Title>Candylicious</Title>
-        <Description>A place where candy lovers unite</Description>
-        <ShopImage alt="candy aesthetic" src={logo} />
-      </div>
-      {/* <CandyList setCandy={setCandy} />
-      <CandyDetail candy={candy} /> */}
+      <NavBar currentTheme={currentTheme} />
 
-      {setView()}
+      <ThemeButton onClick={toggleTheme}>
+        {currentTheme === "light" ? "Dark" : "Light"} Mode
+      </ThemeButton>
+      <Switch>
+        <Route path="/candies/:candySlug">
+          <CandyDetail candies={_candies} deleteCandy={deleteCandy} />
+        </Route>
+        <Route path="/candies">
+          <CandyList candies={_candies} deleteCandy={deleteCandy} />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
     </ThemeProvider>
   );
 }

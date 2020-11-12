@@ -1,6 +1,9 @@
 import React from "react";
-import { Description, ShopImage, Title } from "../styles";
+
 import logo from "../lollipop1bg.jpg";
+
+/*** Styles ***/
+import { Description, ShopImage, Title } from "../styles";
 
 const Home = () => {
   return (

@@ -6,6 +6,7 @@ const candies = [
   {
     id: 1,
     name: "Sour Worm",
+    slug: "sour-worm",
     price: 0.5,
     image: sourworm,
     description: "Zingy Zangy",
@@ -13,6 +14,7 @@ const candies = [
   {
     id: 2,
     name: "Peach Rings",
+    slug: "peach-rings",
     price: 0.5,
     image: peachrings,
     description: "georgia summers",
@@ -20,6 +22,7 @@ const candies = [
   {
     id: 3,
     name: "Rainbow Strings",
+    slug: "rainbow-strings",
     price: 0.5,
     image: rainbowstrings,
     description: "color your life",

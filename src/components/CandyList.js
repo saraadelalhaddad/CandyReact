@@ -1,8 +1,11 @@
-import { ListWrapper } from "../styles";
-
-import CandyItem from "./CandyItem";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
+
+/*** Components ***/
+import CandyItem from "./CandyItem";
+
+/*** Styles ***/
+import { ListWrapper } from "../styles";
 
 const CandyList = (props) => {
   const [query, setQuery] = useState("");
@@ -19,7 +22,7 @@ const CandyList = (props) => {
     />
   ));
   return (
-    <div>
+    <div className="container">
       <SearchBar setQuery={setQuery} />
       <ListWrapper>{candyList}</ListWrapper>
     </div>
