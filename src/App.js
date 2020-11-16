@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import candies from "./candies";
 import { Route, Switch } from "react-router";
-
+import slugify from "react-slugify";
 /*** Styles ***/
 import "./App.css";
 import { GlobalStyle, ThemeButton } from "./styles";
 import { ThemeProvider } from "styled-components";
-import Home from "./components/Home";
 
 /*** Components ***/
 import CandyDetail from "./components/CandyDetail";
 import CandyList from "./components/CandyList";
 import NavBar from "./components/NavBar";
+import Home from "./components/Home";
 
 const theme = {
   light: {
@@ -41,6 +41,9 @@ function App() {
   const toggleTheme = () =>
     setCurrentTheme(currentTheme === "light" ? "dark" : "light");
 
+  const createCandy = (newCandy) => {
+    setCandies([..._candies, newCandy]);
+  };
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle />
@@ -54,7 +57,11 @@ function App() {
           <CandyDetail candies={_candies} deleteCandy={deleteCandy} />
         </Route>
         <Route path="/candies">
-          <CandyList candies={_candies} deleteCandy={deleteCandy} />
+          <CandyList
+            candies={_candies}
+            deleteCandy={deleteCandy}
+            createCandy={createCandy}
+          />
         </Route>
         <Route path="/">
           <Home />
