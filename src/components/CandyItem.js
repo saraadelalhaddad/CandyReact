@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 /*** Styles ***/
 import { CandyWrapper } from "../styles";
 
-const CandyItem = (props) => {
-  const candy = props.candy;
-
+const CandyItem = ({ candy }) => {
   return (
     <CandyWrapper className="col-lg-3 col-md-4 col-sm-6">
       <Link
@@ -17,7 +15,7 @@ const CandyItem = (props) => {
       </Link>
       <p>{candy.name}</p>
       <p className="candy-price"> {candy.price} KD </p>
-      <DeleteButton candyId={candy.id} deleteCandy={props.deleteCandy} />
+      <DeleteButton candyId={candy.id} />
     </CandyWrapper>
   );
 };

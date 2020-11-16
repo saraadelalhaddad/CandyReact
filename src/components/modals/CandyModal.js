@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { CreateButtonStyled } from "../../styles";
-const CandyModal = ({ isOpen, closeModal, createCandy }) => {
+import candyStore from "../../stores/candyStore";
+
+const CandyModal = ({ isOpen, closeModal }) => {
   const [candy, setCandy] = useState({
     name: "",
     price: 0,
@@ -13,7 +15,7 @@ const CandyModal = ({ isOpen, closeModal, createCandy }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    createCandy(candy);
+    candyStore.createCandy(candy);
     closeModal();
   };
   return (
@@ -27,9 +29,10 @@ const CandyModal = ({ isOpen, closeModal, createCandy }) => {
           <div className="col-6">
             <label>Name</label>
             <input
+              required
+              name="name"
               type="text"
               className="form-control"
-              name="name"
               onChange={handleChange}
             />
           </div>
@@ -39,7 +42,7 @@ const CandyModal = ({ isOpen, closeModal, createCandy }) => {
               type="number"
               min="1"
               className="form-control"
-              name="name"
+              name="price"
               onChange={handleChange}
             />
           </div>
@@ -49,7 +52,7 @@ const CandyModal = ({ isOpen, closeModal, createCandy }) => {
           <input
             type="text"
             className="form-control"
-            name="name"
+            name="description"
             onChange={handleChange}
           />
         </div>
@@ -58,7 +61,7 @@ const CandyModal = ({ isOpen, closeModal, createCandy }) => {
           <input
             type="text"
             className="form-control"
-            name="name"
+            name="image"
             onChange={handleChange}
           />
         </div>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import candies from "./candies";
 import { Route, Switch } from "react-router";
-import slugify from "react-slugify";
+// import slugify from "react-slugify";
 /*** Styles ***/
 import "./App.css";
-import { GlobalStyle, ThemeButton } from "./styles";
+import { GlobalStyle } from "./styles";
 import { ThemeProvider } from "styled-components";
 
 /*** Components ***/
@@ -31,37 +30,20 @@ const theme = {
 function App() {
   const [currentTheme, setCurrentTheme] = useState("light");
 
-  const [_candies, setCandies] = useState(candies);
-
-  const deleteCandy = (candySlug) => {
-    const updatedCandies = _candies.filter((candy) => candy.id !== candySlug);
-    setCandies(updatedCandies);
-  };
-
   const toggleTheme = () =>
     setCurrentTheme(currentTheme === "light" ? "dark" : "light");
 
-  const createCandy = (newCandy) => {
-    setCandies([..._candies, newCandy]);
-  };
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle />
       <NavBar currentTheme={currentTheme} />
 
-      <ThemeButton onClick={toggleTheme}>
-        {currentTheme === "light" ? "Dark" : "Light"} Mode
-      </ThemeButton>
       <Switch>
         <Route path="/candies/:candySlug">
-          <CandyDetail candies={_candies} deleteCandy={deleteCandy} />
+          <CandyDetail />
         </Route>
         <Route path="/candies">
-          <CandyList
-            candies={_candies}
-            deleteCandy={deleteCandy}
-            createCandy={createCandy}
-          />
+          <CandyList />
         </Route>
         <Route path="/">
           <Home />

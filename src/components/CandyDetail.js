@@ -3,15 +3,13 @@ import { Link, Redirect, useParams } from "react-router-dom";
 
 /*** Components ***/
 import DeleteButton from "./buttons/DeleteButton";
-
+import candyStore from "../stores/candyStore";
 /*** Styles ***/
 import { DetailWrapper } from "../styles";
 
-const CandyDetail = (props) => {
-  const candySlug = useParams().candySlug;
-  console.log("CandyDetail -> candySlug", candySlug);
-
-  const candy = props.candies.find((candy) => candy.slug === candySlug);
+const CandyDetail = ({ candies }) => {
+  const { candyId } = useParams();
+  const candy = candies.find((candy) => candy.slug === candySlug);
 
   if (!candy) return <Redirect to="/candies" />;
 
@@ -23,7 +21,7 @@ const CandyDetail = (props) => {
         <img src={candy.image} alt={candy.name} />
         <p>{candy.description}</p>
         <p>{candy.price} KD</p>
-        <DeleteButton candySlug={candy.id} deleteCandy={props.deleteCandy} />
+        <DeleteButton candyId={candy.id} />
       </DetailWrapper>
     </>
   );
