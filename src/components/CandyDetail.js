@@ -3,13 +3,13 @@ import { Link, Redirect, useParams } from "react-router-dom";
 
 /*** Components ***/
 import DeleteButton from "./buttons/DeleteButton";
-// import candyStore from "../stores/candyStore";
+import candyStore from "../stores/candyStore";
 /*** Styles ***/
 import { DetailWrapper } from "../styles";
 
-const CandyDetail = ({ candies }) => {
-  const { candyId } = useParams();
-  const candy = candies.find((candy) => candy.slug === candyId);
+const CandyDetail = () => {
+  const { candySlug } = useParams();
+  const candy = candyStore.candies.find((candy) => candy.slug === candySlug);
 
   if (!candy) return <Redirect to="/candies" />;
 
