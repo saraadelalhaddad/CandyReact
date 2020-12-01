@@ -4,12 +4,6 @@ import { CreateButtonStyled } from "../../styles";
 import candyStore from "../../stores/candyStore";
 
 const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
-  // const [candy, setCandy] = useState({
-  //   name: "",
-  //   price: 0,
-  //   description: "",
-  //   image: "",
-  // });
   const [candy, setCandy] = useState(
     oldCandy ?? {
       name: "",
@@ -26,11 +20,8 @@ const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
     candyStore[oldCandy ? "updateCandy" : "createCandy"](candy);
     closeModal();
   };
-  // const UpdateButton = () => {
-  //   const [isOpen, setIsOpen] = useState(false);
-  //   const closeModal = () => setIsOpen(false);
-  //   const openModal = () => setIsOpen(true);
-  // };
+  const handleImage = (event) =>
+    setCandy({ ...candy, image: event.target.files[0] });
 
   return (
     <Modal
@@ -77,10 +68,10 @@ const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
           <label>Image</label>
           <input
             value={candy.image}
-            type="text"
+            type="file"
             className="form-control"
             name="image"
-            onChange={handleChange}
+            onChange={handleImage}
           />
         </div>
         <CreateButtonStyled className="btn float-right" type="submit">

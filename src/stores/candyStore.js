@@ -1,5 +1,4 @@
 import { makeObservable, observable, action } from "mobx";
-import slugify from "react-slugify";
 import axios from "axios";
 
 class CandyStore {
@@ -23,19 +22,19 @@ class CandyStore {
   };
 
   createCandy = async (newCandy) => {
-    // newCandy.slug = slugify(newCandy.name);
-    // newCandy.id = this.candies[this.candies.length - 1].id + 1;
-    // this.candies.push(newCandy);
     try {
+      const formData = new FormData();
+      for (const key in newCandy) formData.append(key, newCandy[key]);
       const response = await axios.post(
         "http://localhost:8000/candies",
-        newCandy
+        formData
       );
       this.candies.push(response.data);
     } catch (error) {
       console.log("CandyStore -> createCandy -> error", error);
     }
   };
+
   deleteCandy = async (candyId) => {
     try {
       await axios.delete(`http://localhost:8000/candies/${candyId}`);
@@ -45,13 +44,15 @@ class CandyStore {
 
   updateCandy = async (updatedCandy) => {
     try {
+      const formData = new FormData();
+      for (const key in updatedCandy) formData.append(key, updatedCandy[key]);
       await axios.put(
         `http://localhost:8000/candies/${updatedCandy.id}`,
-        updatedCandy
+        formData
       );
       const candy = this.candies.find((candy) => candy.id === updatedCandy.id);
       for (const key in candy) candy[key] = updatedCandy[key];
-      candy.slug = slugify(candy.name);
+      candy.image = URL.createObjectURL(updatedCandy.image);
     } catch (error) {
       console.log("CandyStore -> updatedCandy -> error", error);
     }
