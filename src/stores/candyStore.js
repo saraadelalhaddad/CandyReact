@@ -3,9 +3,11 @@ import axios from "axios";
 
 class CandyStore {
   candies = [];
+  loading = true;
   constructor() {
     makeObservable(this, {
       candies: observable,
+      loading: observable,
       fetchCandies: action,
       createCandy: action,
       updateCandy: action,
@@ -16,20 +18,22 @@ class CandyStore {
     try {
       const response = await axios.get("http://localhost:8000/candies");
       this.candies = response.data;
+      this.loading = false;
     } catch (error) {
       console.error("CandyStore -> fetchCandies -> error", error);
     }
   };
 
-  createCandy = async (newCandy) => {
+  createCandy = async (newCandy, bakery) => {
     try {
       const formData = new FormData();
       for (const key in newCandy) formData.append(key, newCandy[key]);
-      const response = await axios.post(
-        "http://localhost:8000/candies",
+      const res = await axios.post(
+        `http://localhost:8000/bakeries/${bakery.id}/candies`,
         formData
       );
-      this.candies.push(response.data);
+      this.candies.push(res.data);
+      bakery.candies.push({ id: res.data.id });
     } catch (error) {
       console.log("CandyStore -> createCandy -> error", error);
     }
@@ -51,12 +55,15 @@ class CandyStore {
         formData
       );
       const candy = this.candies.find((candy) => candy.id === updatedCandy.id);
-      for (const key in candy) candy[key] = updatedCandy[key];
+      for (const key in updatedCandy) candy[key] = updatedCandy[key];
       candy.image = URL.createObjectURL(updatedCandy.image);
     } catch (error) {
       console.log("CandyStore -> updatedCandy -> error", error);
     }
   };
+
+  getCandyById = (candyId) =>
+    this.candies.find((candy) => candy.id === candyId);
 }
 
 const candyStore = new CandyStore();

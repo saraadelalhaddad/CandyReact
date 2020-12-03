@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch } from "react-router";
+import { observer } from "mobx-react";
 // import slugify from "react-slugify";
 /*** Styles ***/
 import "./App.css";
@@ -7,10 +7,10 @@ import { GlobalStyle } from "./styles";
 import { ThemeProvider } from "styled-components";
 
 /*** Components ***/
-import CandyDetail from "./components/CandyDetail";
-import CandyList from "./components/CandyList";
 import NavBar from "./components/NavBar";
-import Home from "./components/Home";
+import Routes from "./Routes";
+import bakeryStore from "./stores/bakeryStore";
+import candyStore from "./stores/candyStore";
 
 const theme = {
   light: {
@@ -37,20 +37,13 @@ function App() {
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle />
       <NavBar currentTheme={currentTheme} />
-
-      <Switch>
-        <Route path="/candies/:candySlug">
-          <CandyDetail />
-        </Route>
-        <Route path="/candies">
-          <CandyList />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+      {bakeryStore.loading || candyStore.loading ? (
+        <h1>Loadinggg </h1>
+      ) : (
+        <Routes />
+      )}
     </ThemeProvider>
   );
 }
 
-export default App;
+export default observer(App);

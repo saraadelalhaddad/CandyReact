@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { CreateButtonStyled } from "../../styles";
 import candyStore from "../../stores/candyStore";
 
-const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
+const CandyModal = ({ bakery, isOpen, closeModal, oldCandy }) => {
   const [candy, setCandy] = useState(
     oldCandy ?? {
       name: "",
@@ -17,7 +17,7 @@ const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    candyStore[oldCandy ? "updateCandy" : "createCandy"](candy);
+    candyStore[oldCandy ? "updateCandy" : "createCandy"](candy, bakery);
     closeModal();
   };
   const handleImage = (event) =>
@@ -67,10 +67,9 @@ const CandyModal = ({ isOpen, closeModal, oldCandy }) => {
         <div className="form-group">
           <label>Image</label>
           <input
-            value={candy.image}
+            name="image"
             type="file"
             className="form-control"
-            name="image"
             onChange={handleImage}
           />
         </div>

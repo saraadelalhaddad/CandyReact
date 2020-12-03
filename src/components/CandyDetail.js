@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Redirect, useParams } from "react-router-dom";
+import { observer } from "mobx-react";
 
 /*** Components ***/
 import DeleteButton from "./buttons/DeleteButton";
@@ -27,4 +28,4 @@ const CandyDetail = () => {
   );
 };
 
-export default CandyDetail;
+export default observer(CandyDetail);

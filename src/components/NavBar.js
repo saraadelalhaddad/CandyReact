@@ -15,6 +15,9 @@ const NavBar = (props) => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item active">
+            <NavLink to="/bakeries" className="nav-link">
+              Bakeries <span className="sr-only">(current)</span>
+            </NavLink>
             <NavLink to="/candies" className="nav-link">
               Candies <span className="sr-only">(current)</span>
             </NavLink>
