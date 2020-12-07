@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import axios from "axios";
+import instance from "./instance";
 
 class CandyStore {
   candies = [];
@@ -16,7 +16,7 @@ class CandyStore {
   }
   fetchCandies = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/candies");
+      const response = await instance.get("/candies");
       this.candies = response.data;
       this.loading = false;
     } catch (error) {
@@ -28,8 +28,8 @@ class CandyStore {
     try {
       const formData = new FormData();
       for (const key in newCandy) formData.append(key, newCandy[key]);
-      const res = await axios.post(
-        `http://localhost:8000/bakeries/${bakery.id}/candies`,
+      const res = await instance.post(
+        `/bakeries/${bakery.id}/candies`,
         formData
       );
       this.candies.push(res.data);
@@ -41,7 +41,7 @@ class CandyStore {
 
   deleteCandy = async (candyId) => {
     try {
-      await axios.delete(`http://localhost:8000/candies/${candyId}`);
+      await instance.delete(`/candies/${candyId}`);
       this.candies = this.candies.filter((candy) => candy.id !== candyId);
     } catch (error) {}
   };
@@ -50,10 +50,7 @@ class CandyStore {
     try {
       const formData = new FormData();
       for (const key in updatedCandy) formData.append(key, updatedCandy[key]);
-      await axios.put(
-        `http://localhost:8000/candies/${updatedCandy.id}`,
-        formData
-      );
+      await instance.put(`/candies/${updatedCandy.id}`, formData);
       const candy = this.candies.find((candy) => candy.id === updatedCandy.id);
       for (const key in updatedCandy) candy[key] = updatedCandy[key];
       candy.image = URL.createObjectURL(updatedCandy.image);

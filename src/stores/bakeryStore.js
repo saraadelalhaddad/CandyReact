@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import axios from "axios";
+import instance from "./instance";
 
 class BakeryStore {
   bakeries = [];
@@ -18,7 +18,7 @@ class BakeryStore {
 
   fetchBakeries = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/bakeries");
+      const response = await instance.get("/bakeries");
       this.bakeries = response.data;
       this.loading = false;
     } catch (error) {
@@ -30,8 +30,8 @@ class BakeryStore {
   //     try {
   //       const formData = new FormData();
   //       for (const key in newBakery) formData.append(key, newBakery[key]);
-  //       const response = await axios.post(
-  //         "http://localhost:8000/bakeries",
+  //       const response = await instance.post(
+  //         "/bakeries",
   //         formData
   //       );
   //       this.bakeries.push(response.data);
@@ -42,7 +42,7 @@ class BakeryStore {
 
   //   deleteBakery = async (bakeryId) => {
   //     try {
-  //       await axios.delete(`http://localhost:8000/bakeries/${bakeryId}`);
+  //       await instance.delete(`/bakeries/${bakeryId}`);
   //       this.bakeries = this.bakeries.filter((bakery) => bakery.id !== bakeryId);
   //     } catch (error) {}
   //   };
@@ -51,8 +51,8 @@ class BakeryStore {
   //     try {
   //       const formData = new FormData();
   //       for (const key in updatedBakery) formData.append(key, updatedBakery[key]);
-  //       await axios.put(
-  //         `http://localhost:8000/bakeries/${updatedBakery.id}`,
+  //       await instance.put(
+  //         `/bakeries/${updatedBakery.id}`,
   //         formData
   //       );
   //       const bakery = this.bakeries.find(
