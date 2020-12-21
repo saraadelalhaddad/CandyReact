@@ -1,4 +1,5 @@
-import { makeObservable, observable, action } from "mobx";
+import { action, makeObservable, observable } from "mobx";
+
 import instance from "./instance";
 
 class BakeryStore {
@@ -26,19 +27,16 @@ class BakeryStore {
     }
   };
 
-  //   createBakery = async (newBakery) => {
-  //     try {
-  //       const formData = new FormData();
-  //       for (const key in newBakery) formData.append(key, newBakery[key]);
-  //       const response = await instance.post(
-  //         "/bakeries",
-  //         formData
-  //       );
-  //       this.bakeries.push(response.data);
-  //     } catch (error) {
-  //       console.log("BakeryStore -> createBakery -> error", error);
-  //     }
-  //   };
+  createBakery = async (newBakery) => {
+    try {
+      const formData = new FormData();
+      for (const key in newBakery) formData.append(key, newBakery[key]);
+      const response = await instance.post("/bakeries", formData);
+      this.bakeries.push(response.data);
+    } catch (error) {
+      console.log("BakeryStore -> createBakery -> error", error);
+    }
+  };
 
   //   deleteBakery = async (bakeryId) => {
   //     try {

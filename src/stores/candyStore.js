@@ -1,4 +1,5 @@
-import { makeObservable, observable, action } from "mobx";
+import { action, makeObservable, observable } from "mobx";
+
 import instance from "./instance";
 
 class CandyStore {
@@ -32,6 +33,7 @@ class CandyStore {
         `/bakeries/${bakery.id}/candies`,
         formData
       );
+      res.data.bakery = bakery;
       this.candies.push(res.data);
       bakery.candies.push({ id: res.data.id });
     } catch (error) {

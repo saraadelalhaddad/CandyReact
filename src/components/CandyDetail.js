@@ -1,18 +1,19 @@
-import React from "react";
 import { Link, Redirect, useParams } from "react-router-dom";
+import React, { useState } from "react";
+
+import DeleteButton from "./buttons/DeleteButton";
+import { DetailWrapper } from "../styles";
+import candyStore from "../stores/candyStore";
 import { observer } from "mobx-react";
 
-/*** Components ***/
-import DeleteButton from "./buttons/DeleteButton";
-import candyStore from "../stores/candyStore";
-/*** Styles ***/
-import { DetailWrapper } from "../styles";
-
 const CandyDetail = () => {
+  const [bakerySlug, setBakerySlug] = useState(null);
   const { candySlug } = useParams();
   const candy = candyStore.candies.find((candy) => candy.slug === candySlug);
+  console.log(candy);
+  if (!bakerySlug) setBakerySlug(candy.bakery.slug);
 
-  if (!candy) return <Redirect to="/candies" />;
+  if (!candy) return <Redirect to={`/bakeries/${bakerySlug}`} />;
 
   return (
     <>

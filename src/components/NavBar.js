@@ -2,9 +2,13 @@ import React from "react";
 import logo from "../lollipop1bg.jpg";
 import { NavLink } from "react-router-dom";
 import SignUpButton from "./buttons/SignUpButton";
+import SignInButton from "./buttons/SignInButton";
+import authStore from "../stores/authStore";
+import { FiLogOut } from "react-icons/fi";
 
+import { observer } from "mobx-react";
 /*** Styles ***/
-import { Logo } from "../styles";
+import { Logo, UsernameStyled } from "../styles";
 
 const NavBar = (props) => {
   return (
@@ -12,7 +16,20 @@ const NavBar = (props) => {
       <Logo to="/" className="navbar-brand">
         <img src={logo} width="50" alt="logo" />
       </Logo>
-      <SignUpButton />
+      <>
+        {authStore.user ? (
+          <>
+            <UsernameStyled>Hello, {authStore.user.username}</UsernameStyled>
+            <FiLogOut onClick={authStore.signout} size="2em" color="red" />
+          </>
+        ) : (
+          <>
+            <SignInButton />
+            <SignUpButton />
+          </>
+        )}
+      </>
+
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item active">
@@ -29,4 +46,4 @@ const NavBar = (props) => {
   );
 };
 
-export default NavBar;
+export default observer(NavBar);

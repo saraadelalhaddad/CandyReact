@@ -1,13 +1,12 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { observer } from "mobx-react";
-/*** Components ***/
 import AddButton from "../buttons/AddButton";
+import CandyList from "../CandyList";
+import { DetailWrapper } from "../../styles";
+import React from "react";
+import authStore from "../../stores/authStore";
 import bakeryStore from "../../stores/bakeryStore";
 import candyStore from "../../stores/candyStore";
-/*** Styles ***/
-import { DetailWrapper } from "../../styles";
-import CandyList from "../CandyList";
+import { observer } from "mobx-react";
+import { useParams } from "react-router-dom";
 
 const BakeryDetail = () => {
   const { bakerySlug } = useParams();
@@ -27,7 +26,7 @@ const BakeryDetail = () => {
       </div>
       <div className="col-12">
         <CandyList candies={candies} />
-        <AddButton bakery={bakery} />
+        {authStore.user && <AddButton bakery={bakery} />}
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
+import AddBakeryButton from "../buttons/AddBakeryButton";
+import BakeryItem from "./BakeryItem";
+import { ListWrapper } from "../../styles";
+import SearchBar from "../SearchBar";
 import { Title } from "../../styles";
 import bakeryStore from "../../stores/bakeryStore";
 import { observer } from "mobx-react";
-import BakeryItem from "./BakeryItem";
 import { useState } from "react";
-import SearchBar from "../SearchBar";
-import AddButton from "../buttons/AddButton";
-import { ListWrapper } from "../../styles";
 
 const BakeryList = () => {
   const [query, setQuery] = useState("");
@@ -18,7 +18,7 @@ const BakeryList = () => {
     <div className="container">
       <SearchBar setQuery={setQuery} />
       <Title>Bakeries</Title>
-      <AddButton />
+      <AddBakeryButton />
       <ListWrapper className="row">{bakeryList}</ListWrapper>
     </div>
   );

@@ -1,13 +1,13 @@
-import { useState } from "react";
-import Modal from "react-modal";
 import { CreateButtonStyled } from "../../styles";
+import Modal from "react-modal";
 import candyStore from "../../stores/candyStore";
+import { useState } from "react";
 
 const CandyModal = ({ bakery, isOpen, closeModal, oldCandy }) => {
   const [candy, setCandy] = useState(
     oldCandy ?? {
       name: "",
-      price: "",
+      price: 0,
       description: "",
       image: "",
     }
